@@ -1,0 +1,10 @@
+.content {
+    width: 200px;
+    height: 280px;
+    background-color: #eeeeee;
+    padding: 20px;
+    margin: 0 auto;
+}
+button{
+    margin: 30px 25px;
+}

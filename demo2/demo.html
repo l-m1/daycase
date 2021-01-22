@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证码</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #content {
+            width: 200px;
+            height: 280px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #code_show {
+            width: 300px;
+            height: 40px;
+            margin-bottom: 15px;
+        }
+        #yz {
+            font-size: 30px;
+            color: red;
+            font-style: oblique;
+        }
+        #chCode {
+            font-size: 13px;
+            color: green;
+        }
+        .codecontent {
+            margin-bottom: 15px;
+        }
+        #inputCode {
+            width: 80px;
+            height: 25px;
+        }
+        #btn {
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="code_show">
+            <span id="yz">ad32c4</span>
+            <a id="chCode">看不清，换一张</a>
+        </div>
+        <div class="codecontent">
+            验证码:<input type="text" id="inputCode">
+        </div>
+        <button id="btn">提交</button>
+        <script>
+            /* 
+             * 逻辑: 1、验证码: 0-9 abcdef进行随机更换
+             2、点击看不清之后，验证码进行更换 
+             3、点击提交之后 进行文本验证码与提供的验证码进行对比
+             不同提示与不填写则会出现错误提示
+             */
+            window.onload = function() {
+                let res = getCode();
+                function getCode() {
+                    let arr =  ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+                    //创建一个空字符串进行保存随机的字符串
+                    let str = '';
+                    for(var i=0;i<6;i++) {
+                        var num = Math.round(Math.random()*(15-0)+0);
+                        str += arr[num]  //num为随机6位数 如果填i则为一个重复数
+                    }
+                    return str
+                }
+
+                //将随机生成的6位验证码赋值给yz中
+                //document.getElementById('yz').innerHTML = res
+                //一旦点击看不清
+                var chCode = document.getElementById('chCode');
+                chCode.onclick = function() {
+                    //验证码发生改变
+                    document.getElementById('yz').innerHTML = getCode(); //如果使用res则为一个定值6位随机数
+                }
+
+                //点击提交按钮
+                var btn = document.getElementById('btn');
+                btn.onclick = function() {
+                    //输入内容与实际验证码不符，提示错误
+                    //获取输入内容
+                    var inputCode = document.getElementById('inputCode').innerHTML;
+                    //获取提示的验证码
+                    var yz = document.getElementById('yz').value;
+                    if(inputCode != yz) {
+                        alert('您输入的验证码不正确');
+                        document.getElementById('inputCode').innerHTML = '';
+                        return false
+                    }
+                }
+            }
+            
+        </script>
+    </div>
+</body>
+</html>

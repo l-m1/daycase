@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container {
+            height: 200px;
+            /* 针对行内元素 */
+            text-align: center;
+            background-color: red;
+        }
+        #box {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            /* 针对垂直方向 */
+            vertical-align: middle;
+            background-color: blue;
+        }
+        #container::after {
+            content: '';
+            height: 200px;
+            width: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="box"></div>
+    </div>
+</body>
+</html>

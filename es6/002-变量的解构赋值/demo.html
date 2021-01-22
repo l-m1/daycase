@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1、数组的解构赋值
+        /* let a = 1;
+        let b = 2;
+        let c = 3;
+        //等同于
+        let [a,b,c] = [1,2,3];
+
+        let [foo,[[bar],[fn]]] = [1,[[2],[3]]];
+        console.log(foo);
+        console.log(bar);
+        console.log(fn);  //1 2 3
+
+        let [,,thirwd] = ['foo','bar','fn'];
+        console.log(thirwd);  //fn
+
+        let [x,,y] = ['xh','he','ye'];
+        console.log(x);
+        console.log(y);
+
+        let [head,...tail] = [1,2,3,4];
+        console.log(tail);
+
+        let [a,b,c] = ['a'];
+        console.log(a);
+        console.log(b);
+        console.log(c);  // a undefined undefined
+
+        //例子1
+        function* fibs() {
+            let a = 0;
+            let b = 1;
+            while(true) {
+                yield a;
+                [a,b] = [b,a+b];
+            }
+        }
+        let [first,second,third,fourth,fifth,sixth] = fibs();  //取yield的值
+        console.log(first);  // 0
+        console.log(second); // 1
+        console.log(third);  // 1
+        console.log(fourth); // 2
+        console.log(fifth);  // 3
+        console.log(sixth);   // 5
+
+        //默认值
+        let [fn1 = 'he'] = [];
+        console.log(fn1);
+
+        let [a1,b1 = '31'] = ['21'];
+        console.log(b1);
+        let [m,n = 'me'] = [];
+        console.log(m,n);  //undefined me
+
+        // let [z = q,q = 'ke'] = [];
+        // console.log(z);  //报错 q在赋值给z前未进行定义 */
+
+        //对象的解构赋值
+        // let {fn2,bar2} = {fn2:'1',bar2: '2'};
+        // console.log(fn2);
+        // console.log(bar2);//1 2
+
+        // let {fn3,bar3} = {bar3: '3',fn3: '7'};
+        // console.log(fn3);
+        // console.log(bar3);  //7 3 顺序不影响
+
+        // // let {fn3} = {bar3: '2',fn3: '4'};
+        // // console.log(bar3);  //报错
+
+        // let {fn4} = {bar4: '4'};
+        // console.log(fn4);  //undefined
+
+        // //将方法赋值到一个对象上
+        // let {log,sin,cos} = Math;
+
+        // let Obj = {fir: 'h',last: 'w'};
+        // let {fir:f,last:l} = Obj;
+        // console.log(f);
+        // console.log(l); //hello world
+
+        //fn5是匹配模式 真正被赋值的是bar5
+        // let {fn5:bar5} = {fn5: '5',bar5: '6'};
+        // console.log(bar5);  //5
+        // console.log(fn5);  //报错
+
+        //嵌套结构
+        // let obj1 = {
+        //     p: [
+        //         'hello',
+        //         {y1: 'world'}
+        //     ]
+        // };
+        // let {p:[x1,{y1}]} = obj1;
+        // console.log(x1);
+        // console.log(y1);  //p是模式不是变量
+        // let obj1 = {
+        //     p: [
+        //         'hello',
+        //         {y1: 'world'}
+        //     ]
+        // };
+        // let {p,p:[x1,{y2,y1}]} = obj1;
+        // console.log(x1);
+        // console.log(y1);
+        // console.log(p);  //p也是变量赋值
+
+        //例子2
+        // const node = {
+        //     loc: {
+        //         start: {
+        //             line: 1,
+        //             column: 5
+        //         }
+        //     }
+        // };
+        // let {loc,loc: {start},loc: {start: {line}}} = node;
+        // console.log(line);
+        // console.log(loc);
+        // console.log(start);  //只有line是变量 其他都是模式
+
+        // let obj2 = {};
+        // let arr = [];
+        // ({fn6: obj2.prop,bar6: arr[0]} = {fn6: 23,bar6: true});
+        // console.log(obj2);
+        // console.log(arr);
+
+        // const obj3 = {};
+        // const obj4 = {fn7: 'hello'};
+        // //Object.setPrototypeOf(obj3,obj4);  //使obj3继承obj4
+
+        // const {fn7} = obj3;
+        // console.log(obj3);
+
+        //默认值
+        // var {b2 = 3} = {};
+        // console.log(b2);
+        // var {x,y=4} = {};
+        // console.log(x);
+        // console.log(y);
+
+        // var {m:h = 2} = {m: 5};
+        // console.log(h);  //m为模式 h为真正变量
+        // //console.log(m); //报错
+
+        // // const {a} = {a:undefinde};
+        // // console.log(a);  //报错
+        // const {a} = {a:null};
+        // console.log(a);  //null
+
+        // //注意
+        // let s;
+        // //{s} = {s:1}; //错误写法
+        // ({s} = {s:5});
+        // console.log(s);
+
+        // let arr = [1,2,3];
+        // let {0:first,[arr.length-1]:last} = arr;
+        // console.log(first);
+        // console.log(last);
+        
+        //字符串的解构赋值
+        // const [a,b,c,d,e] = 'hello';
+        // console.log(a,b,c,d,e);
+        // let {length: len} = 'hello';
+        // console.log(len);
+
+        //数值和布尔值的解构赋值
+        // let {toString: s} = 123;
+        // s === Number.prototype.toString;
+        // let {toString: a} = true;
+        // a === Boolean.prototype.toString;
+
+        // let {prop: x} = null;
+        // let {prop: y} = undefined; //报错
+
+        //函数参数解构赋值
+        // function add([x,y]) {
+        //     console.log(x+y);
+        // }
+        // add([2,1]);
+
+        //[[1,2],[3,4]].map(([a,b]) => console.log(a+b));
+
+        //默认值
+        // function move({x = 0,y = 0} = {}) {
+        //     console.log([x,y]);
+        // }
+        // move({x:3,y:8}); // 3 8
+        // move({x:3}); // 3 0
+        // move({});  //0 0
+        // move();  //0 0
+        // function move({x,y} = {x:0,y:0}) {
+        //     console.log([x,y]);
+        // }
+        // move({x:3,y:8}); //3 8
+        // move({x:3});  //3 undefined
+        // move({}); // undefined undefined
+        // move(); // 0 0
+        //以上第一种 为变量x，y设置默认值 第二种是为参数设置默认值
+
+        //undefined会触发函数默认值 输出1 yes 3
+        //[1,undefined,3].map((x = 'yes') => console.log(x)); 
+        
+        //圆括号问题 以下语句都会报错
+        //变量声明语句
+        // let ({a}) = [1];
+        // let {x: (c)} = {};
+        // let ({x: c}) = {};
+        // let {(x: c)} = {};
+        // let {(x) : c} = {};
+        // let {o: ({p:p})} = {o: {p: 2}};
+        //函数参数
+        // function f([(z)]) {return z}
+        // function f([z,(x)]) {return x:}
+        //赋值语句的模式
+        // ({p:a}) = {p:42};
+        // ([a]) = [5];
+        // {({p:a}),{x:c}} = {{},{}};
+
+        //可以使用圆括号
+        // [(b)] = [3];
+        // ({p: (d)} = {});
+        // [(parseInt.prop)] = [3];
+
+        //用途
+        // let x = 2;
+        // let y = 3;
+        // [x,y] = [y,x];
+        // console.log(x,y);
+
+        // function example() {
+        //    return [1,2,3];
+        // }
+        // let [a,b,c] = example();
+        // function example2() {
+        //     return {
+        //         foo: '1',
+        //         bar: 'lisa'
+        //     };
+        // }
+        // let {foo,bar} = example2();
+        // console.log(foo,bar);
+
+        // function f1([m,n,l]) {
+        //     console.log(m,l,n);
+        // }
+        // f1([1,2,3]);
+        // function f({h,g,d}) {
+        //     console.log(d,g,h);
+        // }
+        // f({d:3,g:6,h:5})
+
+        // let jsonData = {
+        //     id: 12,
+        //     status: 'ok',
+        //     data: [32,54]
+        // };
+        // let {id,status,data:number} = jsonData;
+        // console.log(id,status,number);
+
+        //遍历Map结构
+        // const map = new Map();
+        // map.set('first','hello');
+        // map.set('second','world');
+        
+        // for(let [key,value] of map) {
+        //     console.log(key + ' is ' + value);
+        // }
+
+        //输入模块的指定方法
+        // const {SourceMapConsumer,SourceNode} = require('source-map');
+
+    </script>
+</body>
+</html>

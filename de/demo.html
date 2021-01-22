@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    #outer {
+        width: 400px;
+        height: 400px;
+        position: relative;
+        margin: 50px auto;
+        overflow: hidden;
+    }
+    #imgList {
+        position: absolute;
+        list-style: none;
+        /* width: 2000px; */
+        /* 设置图片的left */
+        /* left: -400px; */
+    }
+    #imgList img{
+        width: 400px;
+        height: 400px;
+        float: left;
+    }
+    #navbar {
+        position: absolute;
+        bottom: 15px;
+    }
+    #navbar a{
+        width: 15px;
+        height: 15px;
+        margin: 0 5px;
+        background-color: red;
+        float: left;
+        /* 设置a的颜色淡化 */
+        opacity: 0.5;
+        /* 兼容浏览器 */
+        filter: opacity(50px);
+    }
+    </style>
+    <script type="text/javascript" src="./tools.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        //获取图片 图片父级
+        var imgArr = document.getElementsByTagName('img');
+        var imgList = document.getElementById('imgList');
+        //动态设置图片父级的宽度
+        imgList.style.width = imgArr.length*400 + 'px';
+
+        //修改图片的left属性 更换图片
+        //设置索引为0
+        var index = 0;
+        index %= imgArr.length;
+        //imgList.style.left = -1200 + 'px';
+        /* for(var i=0;i<imgArr.length;i++) {
+            imgArr[i].style.left = -400 + 'px'
+        } */
+
+        //设置超链接的居中显示
+        //获取超链接
+        var navbar = document.getElementById('navbar');
+        var outer = document.getElementById('outer');
+        navbar.style.left = (outer.offsetWidth- navbar.offsetWidth) / 2 + 'px';
+
+        //点击导航按钮 切换图片
+        //获取导航按钮
+        var navbar = document.getElementById('navbar');
+        //获取所有的a
+        var linkA = document.getElementsByTagName('a');
+        for(var i=0;i<linkA.length;i++) {
+            //将i保存
+            linkA[i].num = i;
+            //设置默认第一个为选中颜色 黑色
+            linkA[index].style.backgroundColor = "black";
+            linkA[i].onclick = function() {
+                //关闭定时器
+                clearInterval(timer);
+                //索引自增
+                index++;
+                index %= imgArr.length;
+                //console.log(i);
+                index = this.num;
+                //console.log(index);
+                //切换图片 修改left
+                //imgList.style.left = -400*index + 'px';
+                //使用move滑动切换
+                move(imgList,"left", -400*index,20,function() {
+                    autoChange();
+                });
+                setA();
+            }
+        }
+        //使用自动切换图片
+        autoChange();
+
+        //给超链接设置点击颜色变化效果
+        function setA() {
+            //当导航到最后一张图时，切换导航按钮
+            if(index >= imgArr.length - 1) {
+                index = 0;
+                //通过CSS将最后一张切换为第一张 修改left
+                imgList.style.left = 0 + 'px';
+            }
+            for(var i=0;i<linkA.length;i++) {
+                //设置未选中时为红色
+                linkA[i].style.backgroundColor = "";
+            }
+            //选中为黑色
+            linkA[index].style.backgroundColor = "black";
+        }
+
+        var timer;
+        //自动切换图片
+        function autoChange() {
+            //设置定时器 进行自动切换图片
+            timer = setInterval(function() {
+                //使索引自增
+                index++;
+                index %= imgArr.length;
+                move(imgList,"left",-400*index,20,function() {
+                    //修改导航颜色
+                    setA();
+                });
+            },3000)
+        }
+    }
+    
+    </script>
+</head>
+<body>
+    <div id="outer">
+        <ul id="imgList">
+            <li><img src="./imgs/1.jpg" alt=""></li>
+            <li><img src="./imgs/2.jpg" alt=""></li>
+            <li><img src="./imgs/3.jpg" alt=""></li>
+            <li><img src="./imgs/4.jpg" alt=""></li>
+            <li><img src="./imgs/5.jpg" alt=""></li>
+            <li><img src="./imgs/1.jpg" alt=""></li>
+        </ul>
+        <div id="navbar">
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+        </div>
+    </div>
+</body>
+</html>

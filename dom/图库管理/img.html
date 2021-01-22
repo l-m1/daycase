@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .outer ul {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <ul>
+            <li><a href="./imgs/1.jpg" onclick="showPic(this);return false;">加油呀</a></li>
+            <li><a href="./imgs/2.jpg" onclick="showPic(this);return false;">好好生活</a></li>
+            <li><a href="./imgs/3.jpg" onclick="showPic(this);return false;">慢走</a></li>
+            <li><a href="./imgs/4.jpg" onclick="showPic(this);return false;">地狱</a></li>
+        </ul>
+        <img src="./imgs/5.jpg" alt="" id="mh">
+    </div>
+    <script>
+        window.onload = function() {
+            //点击图片链接 图片显示在当前页面上
+            //1、页面不进行跳转 2、修改src
+            function showPic(whiPic) {
+                var source = whiPic.getAttribute("href");
+                var placeholder = document.getElementById('mh');
+                placeholder.setAttribute(src,"source");
+            }
+        }
+    </script>
+</body>
+</html>

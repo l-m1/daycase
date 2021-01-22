@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let m = String.fromCharCode(0x20BB7);
+        // let n = String.fromCodePoint(0x20BB7);
+        // console.log(m);
+        // console.log(n);
+        // console.log(String.fromCodePoint(0x78,0x1f680,0x79) === 'x\uD83D\uDE80y');
+
+        //`foo${1+2}bar`
+        //等同于
+        // String.raw({raw: ['foo','bar']},1+2)
+
+        // String.raw = function(strings,...values) {
+        //     let output = '';
+        //     let index;
+        //     for(index = 0;index < values.length;index++) {
+        //         output += strings.raw[index] + values[index];
+        //     }
+
+        //     output += strings.raw[index]
+        //     return output;
+        // }
+
+        // var  s = '吉';
+        // console.log(s.length);
+        // console.log(s.charAt(0));
+        // console.log(s.charAt(1));
+        // console.log(s.charCodeAt(0));
+        // console.log(s.charCodeAt(1));
+
+        // let s = 'a';
+        // console.log(s.charCodeAt(0));  //十进制
+        // console.log(s.charCodeAt(0).toString(16)); //十六进制
+
+        // let s = 'ab';
+        // for(let ch of s) {
+        //     console.log(ch.codePointAt(0).toString(16));
+        // }
+
+        // let arr = [...'abcd'];
+        // arr.forEach(
+        //     ch => console.log(ch.codePointAt(0).toString(16))
+        // );
+
+        // function is32Bit(c) {
+        //     return c.codePointAt(0) > 0xFFFF;
+        // }
+        // console.log(is32Bit('a'));  //false
+
+        // let s = 'hello world';
+        // let y = s.includes('hello',6);
+        // let f = s.startsWith('world',6);
+        // let l = s.endsWith('hello',5);
+        // console.log(y,f,l);  // false true true
+
+        // console.log('x'.repeat(3));
+        // console.log('hello'.repeat(4));
+        // console.log('na'.repeat(0));
+
+        // console.log('na'.repeat(3.9)); //赋值三次    
+        // // console.log('na'.repeat(Infinity)); 报错
+        // // console.log('na'.repeat(-1)); 报错
+        // console.log('na'.repeat(-0.9)); //0
+        // console.log('na'.repeat(NaN)); 
+        // console.log('na'.repeat('3')); //3
+
+        // console.log('x'.padStart(5,'ab'));  //ababx
+        // console.log('x'.padStart(4,'ab'));  //abax
+        // console.log('x'.padEnd(5,'ab'));  //xabab
+        // console.log('x'.padEnd(4,'ab'));  //xaba
+
+        // console.log('xxx'.padStart(2,'ac'));
+        // console.log('xxx'.padStart(5,'0123456789'));
+        // console.log('xxx'.padEnd(5,'0123456789'));
+
+        // //提示字符串格式
+        // console.log('1'.padStart(10,'YYYY-MM-DD'));
+        // console.log('09-12'.padStart(10,'YYYY-MM-DD'));
+
+        // const s = '  abc  ';
+        // console.log(s.trim());
+        // console.log(s.trimStart());
+        // console.log(s.trimEnd());
+
+        // console.log('aabbcc'.replace('b','_'));
+        // console.log('aabbcc'.replace(/b/g,'_'));
+        // console.log('aabbcc'.replaceAll('b','_'));
+
+        // String.prototype.replaceAll(searchValue,replacement)
+        //searchValue 是搜索模式 可以是一个字符串 也可以是全局正则表达式(带有g修饰符)
+        // console.log('aabbcc'.replaceAll(/b/,'_')); // 不带g 报错
+
+        //$&返回原字符串 $`表示匹配结果之前的字符串 &'匹配结果之后的字符串
+        // console.log('abbc'.replaceAll('b','$&'));
+        // console.log('abbc'.replaceAll('b','$`'));  //aaabc 第一个b 结果之前为a 第二个b结果之前为ab
+        // console.log('abbc'.replaceAll('b',`$'`));  //abccc
+        // console.log('abbc'.replaceAll(/(ab)(bc)/g,'$2$1'));  //bcab $1表示第一个匹配 $2表示第二个匹配
+
+        // console.log('abc'.replaceAll('b','$$'));  //a$c  $$-> $ 将b替换  
+
+        // console.log('aabbcc'.replaceAll('b',() => '_')); 
+
+        const str = '123abc456';
+        const regex = /(\d+)([a-z]+)(\d+)/g;
+        function replacer(match,p1,p2,p3,offset,string) {
+            return [p1,p2,p3].join('-');
+        }
+        console.log(str.replaceAll(regex,replacer));  // 123-abc-456
+    </script>
+</body>
+</html>

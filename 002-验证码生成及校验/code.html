@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .v_code{
+            width: 200px;
+            height: 280px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+        .code_show{
+            margin-bottom: 10px;
+        }
+        .code{
+            color: blue;
+            font-style: italic;
+            font-size: 30px;
+        }
+        #linkbt{
+            color: forestgreen;
+            font-size: 10px;
+        }
+        .input_code{
+            margin-bottom: 10px;
+        }
+        #inputCode{
+            width: 80px;
+            height: 25px;
+        }
+        #Button1{
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="v_code">
+        <div class="code_show">
+            <span class="code" id="checkCode">adfs34y</span>
+            <a id="linkbt">看不清换一张</a>
+        </div>
+        <div class="input_code">
+            <label for="inputCode">验证码: </label>
+            <input type="text" id="inputCode" />
+            <span id="text_show"></span>
+        </div>
+        <input id="Button1" type="button" value="确定" />
+    </div>
+    <script>
+        //1.生成验证码
+        //6位数 0-9 a-f 随机生成6位 內部必须是0-9 a-f 字符串
+        //数组下标 0、1、2...从数组当中，随机下标
+        window.onload = function() {
+            var res = getCode()
+            function getCode() {
+                var arr = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+                var str = '';
+                for(var i=0;i<6;i++){
+                    var num = Math.round(Math.random()*(15-0)+0);
+                    str += arr[num];
+                }
+                return str;
+            }
+            document.getElementById('checkCode').innerText = res;
+            document.getElementById('linkbt').onclick = function() {
+                document.getElementById('checkCode').innerText = getCode();
+            }
+
+            //提交进行对比
+            document.getElementById('Button1').onclick = function() {
+                var code = document.getElementById('checkCode').innerText;
+                var inputCode = document.getElementById('inputCode').value;
+                if(code != inputCode){
+                    alert('您输入的验证码不正确');
+                    document.getElementById('inputCode').value = '';
+                    return false;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

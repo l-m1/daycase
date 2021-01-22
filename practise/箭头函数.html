@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #box {
+            width: 100px;
+            height: 100px;
+            background: #58a;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+    </div>
+    <script>
+        /* 使用箭头函数表示 2s后box颜色变为pink */
+        var box = document.getElementById('box');
+        box.onclick = function() {
+            //2s后变为粉色
+            setInterval(() => {
+                this.style.background = 'pink'
+            },2000)
+        }
+
+        var a = ['13','22','42','51','77','88']
+        var b = [];
+        for(var i=0;i<a.length;i++) {
+            if(i%2 === 0) {
+                return b.push(i)
+            }
+        }
+    </script>
+</body>
+</html>

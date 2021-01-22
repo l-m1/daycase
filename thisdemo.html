@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       /*  var x = 20;
+        var a = {
+            fn: function() {
+                var x = 30;
+                return function() {
+                    return this.x 
+                }
+            }
+        }
+        console.log(a.fn());
+        console.log((a.fn())()); 
+        console.log(a.fn()());
+        console.log(a.fn()() == (a.fn())());
+        console.log(a.fn().call(this));
+        console.log(a.fn().call(a)); */  //？
+        // a对象 <= a调用 20 ()()自调用->window 20 true 20 undefined 
+        /* var a = 2;
+        var obj = {
+            a:3,
+            foo:foo = () => {
+            return console.log(this.a);
+            }
+        };
+        obj.foo(); //2
+        foo.call(obj); */
+
+        /* var fullname = 'a';
+        var obj = {
+            fullname: 'b',
+            prop: {
+                fullname: 'c',
+                getFullname: () => {
+                    return this.fullname;
+                },
+                getName: function() {
+                    return this.fullname;
+                }
+            }
+        };
+        console.log(obj.prop.getFullname());  //a
+        var test = obj.prop.getFullname;
+        console.log(test());  //a
+
+        console.log(obj.prop.getName());  //c
+        var test = obj.prop.getName();  
+        console.log(test);   //c
+        var test = obj.prop.getName;
+        console.log(test());  //a */
+
+        /* var obj = {
+            num: 4,
+            fn : function() {
+                console.log(this);
+                (() =>{
+                    console.log(this);
+                })();
+            }
+        }
+        obj.fn();
+        var w = obj.fn;
+        w();
+        var obj1 = {name: 'lisi',fn:obj.fn}
+        obj1.fn();
+        obj.fn.call(obj1); */
+
+        /* function fn1() {
+            let fn2 = function() {
+                console.log(this); //window
+                fn3();
+            };
+            console.log(this);  //window
+            fn2();
+        };
+        function fn3() {
+            console.log(this); //window
+        }
+        fn1(); */
+        
+       /*  var name = "飞行";
+        let obj = {
+            name: '听风',
+            fn: function() {
+                console.log(this.name);
+            }
+        };
+        let obj1 = {
+            name: '时间',
+            //fn: function() {
+              //  console.log(this.name);
+            //}
+        }
+        //obj1.fn = obj.fn;
+        obj1.fn(); */
+
+        /* let obj1 = {
+            name: '听风'
+        };
+        let obj2 = {
+            name: '时间'
+        };
+        let oobj3 = {
+            name: 'echo'
+        }
+        var name = '行星';
+        function fn() {
+            console.log(this.name);
+        }
+        fun();  //行星
+        fun.call(obj1);  //听风
+        fun.apply(obj2); //时间
+        fun.bind(obj3)();  //echo */
+
+        /* let obj1 = {
+            name: '听风'
+        };
+        let obj2 = {
+            name: '时间'
+        };
+        var name = '行星';
+        function fn() {
+            console.log(this.name);
+        }
+        fn.call(undefined);  //行星飞行
+        fn.apply(null);  //行星飞行
+        fn.bind(undefined)();  //行星飞行 */
+        /* var name = 'win';
+        var obj1 = {
+            name: '1',
+            fn1: function() {
+                console.log(this.name);
+            },
+            fn2: () => console.log(this.name),
+            fn3: function() {
+                return function() {
+                    console.log(this.name);
+                }
+            },
+            fn4: function() {
+                return () => console.log(this.name);
+            }
+        }
+        var obj2 = {
+            name: '2'
+        };
+
+        obj1.fn1();
+        obj1.fn1.call(obj2);
+
+        obj1.fn2();
+        obj1.fn2.call(obj2);
+
+        obj1.fn3()();
+        obj1.fn3().call(obj2);
+        obj1.fn3.call(obj2)();
+
+        obj1.fn4()();
+        obj1.fn4().call(obj2);
+        obj1.fn4.call(obj2)(); */
+
+        const obj = {
+            aa() {
+                setTimeout(function() {
+                    setTimeout(function() {
+                        console.log(this); //window
+                    })
+                    setTimeout(() => {
+                        console.log(this); //window
+                    })
+                })
+                setTimeout(() => {
+                    setTimeout(function() {
+                        console.log(this);  //window
+                    })
+                    console.log(this);  //window
+                    setTimeout(() => {
+                        console.log(this); //aa
+                    })
+                })
+            }
+        }
+        obj.aa();
+    </script>
+</body>
+</html>

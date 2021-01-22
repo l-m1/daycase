@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .pre {
+            width: 400px;
+            border: 1px solid black;
+        }
+        .son {
+            /* 水平垂直居中 */
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            /* 刚开始的进度条为0 */
+            width: 0;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="pre">
+        <div class="son">
+            <span>0</span><span>%</span>
+        </div>
+    </div>
+    <p>
+        <input type="button" value="安装" id="install">
+    </p>
+    <script>
+        //逻辑：1、点击安装之后 进度条变长(width) 但不会超过父元素的长即400px
+        //设置一个数据记录 每秒增长的长度 所以要设置定时器
+        //2、根据安装的进度条 显示进度 (百分比 sum/400 * 100)
+        //获取元素
+        let install = document.getElementById('install');
+        let div = document.getElementsByTagName('div');  //第一个div下标为0 第二个下标为1
+        let span = document.getElementsByTagName('span')
+
+
+        let sum = 0; //记录每秒的增幅
+        let timer = null;
+        install.onclick = function() {
+            if(timer == null) {
+                timer = setInterval(() => {
+                    sum += 20; //每秒增长20
+                    div[1].style.width = sum + 'px';
+                    //设置进度 取整使用Math.ceil
+                    span[0].innerText =  Math.ceil(sum/400*100);
+
+                    //控制进度条不超过 父元素长度
+                    if(sum == 400){
+                        clearInterval(timer);
+                    }
+                },1000)
+            }
+        }
+    </script>
+</body>
+</html>

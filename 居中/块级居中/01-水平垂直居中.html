@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent{
+            background-color: red;
+            height: 200px;
+            position: relative;
+        }
+        .child{
+            background-color: blue;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            /* 方法一:设置定位 */
+            /* left: 50%;
+            top: 50%;
+            margin-top: -50px;
+            margin-left: -50px; */
+            /* 方法二:通过css提供的函数 */
+            left: calc(50% - 50px);
+            top: calc(50% - 50px);
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="child"></div>
+    </div>
+</body>
+</html>

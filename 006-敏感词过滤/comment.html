@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #res{
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h2>敏感词过滤</h2>
+    <p>
+        <!-- 用户输入的地方 -->
+        <textarea name="" id="area" cols="30" rows="10"></textarea>
+    </p>
+    <p>
+        <!-- 提交的地方 进行展示 -->
+        <input type="submit" value="发布" id="input">
+    </p>
+    <p id="res"></p>
+
+    <script>
+        //逻辑: 用户输入的值，如果和正则匹配，则进行替换
+        // 妈的，金三胖  使用 * 替换
+        //将上面三个元素拿到
+        let area = document.getElementById('area');
+        let input = document.getElementById('input');
+        let res = document.getElementById('res');
+
+        //定义正则 匹配全局
+        let reg = /金三胖|妈的/g;
+        //点击提交按钮
+        input.onclick = function() {
+            //匹配到正则 使用 * 替换
+            let result = area.value.replace(reg,'*');
+            console.log(result);
+            res.innerHTML = result;
+        }
+    </script>
+</body>
+</html>

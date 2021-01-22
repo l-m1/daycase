@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .big {
+            width: 415px;
+            height: 400px;
+        }
+        .small>img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="./images/1.png" alt=""  class="big">
+    </div>
+    <div class="small">
+        <img src="./images/1.png" alt="">
+        <img src="./images/2.png" alt="">
+        <img src="./images/3.png" alt="">
+        <img src="./images/4.png" alt="">
+    </div>
+    <script>
+        //逻辑：1、将鼠标放入在某个小图上时 上面的大图就对应下面的小图 
+        // 2、大图轮换 即修改src
+        //鼠标移入移出 onmouseover 拿到的应为多个img标签 即数组
+        let imgs = document.getElementsByTagName('img')
+        //imgs为数组 则需要遍历 但是默认显示的第一张(下标为0)为大图 所以遍历从1开始
+        for(let i=1;i<imgs.length;i++) {
+            imgs[i].onmouseover = function() {
+                imgs[0].src = imgs[i].src;
+            }
+        }
+    </script>
+</body>
+</html>

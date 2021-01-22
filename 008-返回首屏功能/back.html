@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            height: 2000px;
+        }
+        .goTop {
+            width: 100px;
+            /* 设置垂直居中 */
+            height: 100px;
+            line-height: 100px;
+            background-color: #bbb;
+            /* 设置水平居中 */
+            text-align: center;
+            position: fixed;
+            /* 距离底部100px */
+            bottom: 100px;
+            right: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>返回首屏</h2>
+        <div class="goTop">返回</div>
+    </div>
+    <script>
+        //逻辑：1、当用户滑动滚动条，到达400px时，返回按钮要显示，反之小于400px，返回按钮要隐藏
+        //2、出现按钮之后，用户点击返回按钮则会即刻返回首屏
+        //获取返回按钮
+        let goTop = document.getElementsByClassName('goTop')[0];
+        window.onscroll = function() { //有滑动，则引发window.onscroll
+            //找出滑动距离 谁进行滑动的
+            let res = document.body.scrollTop || document.documentElement.scrollTop;
+            //console.log(res);
+            if(res >= 400) {
+                goTop.style.display = 'block'; //显示
+            }else {
+                goTop.style.display = 'none';  //隐藏
+            }
+        }
+        goTop.onclick = function() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
+</html>

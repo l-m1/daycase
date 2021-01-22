@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent{
+            width: 600px;
+            height: 600px;
+            background-color: red;
+        }
+        .child{
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            /* 子元素上下各有250px的padding值，加上子元素内容本身 则就覆盖父元素 */
+            padding: calc((100% - 100px) / 2);
+            /* 使背景颜色只对content生效 不对padding生效 */
+            background-clip: content-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="child"></div>
+    </div>
+</body>
+</html>

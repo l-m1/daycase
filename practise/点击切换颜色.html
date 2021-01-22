@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 800px;
+            height: 400px;
+        }
+        #cha {
+            margin-bottom: 10px;
+        }
+        .box1 {
+            width: 100px;
+            height: 100px;
+            float: left;
+            margin: 0 10px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2 id="cha">点击切换颜色</h2>
+        <div class="box1"></div>
+        <div class="box1"></div>
+        <div class="box1"></div>
+    </div>
+    <script>
+        let box1 = document.getElementsByClassName('box1');
+        for(var i=0;i<3;i++) {
+            box1[i].onclick = function() {
+                this.style.background = 'pink'
+            }
+        }
+    </script>
+</body>
+</html>

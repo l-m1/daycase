@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #outer {
+            width: 400px;
+            height: 400px;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        #imgList {
+            /* 给所有图片父级设置宽度 */
+            /* width: 1000px; */
+            list-style: none;
+            position: absolute;
+            /* left: -1200px; */
+        }
+        #imgList img {
+            width: 400px;
+            height: 400px;
+            float: left;
+        }
+        #navBar {
+            position: absolute;
+            bottom: 15px;
+            /* left: 137px; */
+        }
+        #navBar a {
+            float: left;
+            width: 15px;
+            height: 15px;
+            margin: 0 5px;
+            background-color: red;
+            /* 颜色调淡 */
+            opacity: 0.5;
+            /* 调淡的颜色兼容IE8及以下浏览器 */
+            filter: opacity(50px);
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="outer">
+        <ul id="imgList">
+            <li><img src="./imgs/1.jpg" alt=""></li>
+            <li><img src="./imgs/2.jpg" alt=""></li>
+            <li><img src="./imgs/3.jpg" alt=""></li>
+            <li><img src="./imgs/4.jpg" alt=""></li>
+            <li><img src="./imgs/5.jpg" alt=""></li>
+            <li><img src="./imgs/1.jpg" alt=""></li>
+        </ul>
+        <div id="navBar">
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="./tools.js"></script>
+    <script>
+        window.onload = function() {
+            //给所有图片的父级设置宽度
+            var imgList = document.getElementById('imgList');
+            //获取所有图片
+            var imgArr = document.getElementsByTagName('img');
+            //console.log(imgArr.length);
+            imgList.style.width = 400*imgArr.length + 'px';
+
+            //设置图片索引 默认第一张图片
+            var index = 0;
+            index %= imgArr.length;
+            /* for(var i=0;i<imgArr.length;i++) {
+                index++;
+                imgList.style.left = -400*index + 'px';
+            } */
+
+            //设置超链接居中 设置left
+            //获取外部navBarleft和outer外部left
+            var navBar = document.getElementById('navBar');
+            var outer = document.getElementById('outer');
+            //设置超链接left
+            navBar.style.left = (outer.offsetWidth - navBar.offsetWidth) / 2 + 'px';
+
+
+            //点击哪个超链接 图片显示哪张
+            //点击索引 0 显示第0张图片
+            //获取所有超链接
+            var linkA = document.getElementsByTagName('a');
+            for(var i=0;i<linkA.length;i++) {
+                //设置一个变量保存单个i
+                linkA[i].num = i;
+                //首个超链接为黑色
+                linkA[index].style.backgroundColor = "black"
+                linkA[i].onclick = function() {
+                    //关闭自动切换
+                    clearInterval(timer);
+                    //获取所点击的超链接的索引值
+                    //console.log(this.num);
+                    index = this.num;
+                    //切换图片
+                    //imgList.style.left = -400*index + 'px';
+                    setA();
+                    //切换图片
+                    move(imgList,"left",-400*index,20,function() {
+                        autoChange();
+                    });
+                }
+            }
+            //自动切换图片
+            autoChange();
+            function setA(){
+                //判断当前索引是否为最后一张
+                if(index >= imgArr.length - 1){
+                    index = 0;
+                    //通过CSS将最后一张切换为第一张
+                    imgList.style.left = 0 + 'px';
+                }
+                for(var i=0;i<linkA.length;i++) {
+                    //设置未点击时颜色为红色
+                    linkA[i].style.backgroundColor = "";
+                }
+                //点击的超链接设置为黑色
+                linkA[index].style.backgroundColor = "black";
+            }
+            
+            //设置定时标识
+            var timer;
+            //开启一个函数，用来自动切换图片
+            function autoChange() {
+                timer = setInterval(function() {
+                    //使索引自增
+                    index++;
+                    index %= imgArr.length;
+                    move(imgList,"left",-400*index,20,function(){
+                        //修改导航按钮
+                        setA();
+                    })
+                },3000)
+            }
+        }
+    </script>
+</body>
+</html>

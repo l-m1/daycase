@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // var regex = /xyz/i
+        // //等价于
+        // var regex = new RegExp('xyz','i');
+        // var regex = new RegExp(/xyz/i);
+        // var regex = new RegExp(/abc/ig,'i').flags;
+        // console.log(regex);
+        // var s = '吉';
+        // //console.log(/^.$/.test(s));  //true
+        // console.log(/^.$/u.test(s));   //true
+
+        // console.log(/\u{61}/.test('a'));  //false
+        // console.log(/\u{61}/u.test('a'));  //true
+
+        // function codePointLength(text) {
+        //     var result = text.match(/[\s\S]/gu);
+        //     return result ? result.length : 0;
+        // }
+        // var s = 'aa';
+        // console.log(s.length);  // 2
+        // console.log(codePointLength(s));  // 2
+
+        // console.log(/[a-z]/i.test('\u212A')); //false
+        // console.log(/[a-z]/iu.test('\u212A')); //true
+
+        // console.log(/\,/);
+        // console.log(/\,/u);
+
+        // var s = 'aaa_aa_a';
+        // var r1 = /a+/g;
+        // var r2 = /a+/y;
+        // console.log(r1.exec(s));  //aaa
+        // console.log(r2.exec(s));  //aaa
+
+        // console.log(r1.exec(s));  //aa
+        // console.log(r2.exec(s)); //null
+        // var s = 'aaa_aa_a';
+        // var r = /a+_/y;
+        // console.log(r.exec(s));  //aaa_
+        // console.log(r.exec(s));  //aa_
+
+        // const REGEX = /a/g;
+        // REGEX.lastIndex = 2;
+        // const match = REGEX.exec('xaya');
+        // console.log(match.index);  // 3
+        // console.log(REGEX.lastIndex);  // 4
+        // console.log(REGEX.exec('xaya'));  //null
+
+        // const REGEX = /a/y;
+        // REGEX.lastIndex = 2;
+        // console.log(REGEX.exec('xaya'));  //null
+        // REGEX.lastIndex = 3;
+        // const match = REGEX.exec('xaya');
+        // console.log(match.index);  // 3
+        // console.log(REGEX.lastIndex);  //4
+
+        // const REGEX = /a/gy;
+        // let m = 'aaaxa'.replace(REGEX,'-');  //---xa
+        // console.log(m);
+
+        // console.log('a1a2a3'.match(/a\d/y));  //a1
+        // console.log('a1a2a3'.match(/a\d/gy));  //a1,a2,a3
+
+        // const TOKEN_Y = /\s*(\+|[0-9]+)\s*/y;
+        // const TOKEN_G = /\s*(\+|[0-9]+)\s*/g;
+
+        // function tokenize(TOKEN_REGEX,str) {
+        //     let result = [];
+        //     let match;
+        //     while(match = TOKEN_REGEX.exec(str)) {
+        //         result.push(match[1]);
+        //     }
+        //     return result;
+        // }
+        // console.log(tokenize(TOKEN_Y,'3 + 4'));  // 3 + 4
+        // console.log(tokenize(TOKEN_G,'3 + 4')); // 3 + 4
+
+        // console.log(tokenize(TOKEN_Y,'3x+2')); // 3
+        // console.log(tokenize(TOKEN_G,'3x+2')); // 3 + 2
+
+        // var r = /hello\d/y;
+        // console.log(r.sticky); //表示是否设置了y修饰符
+
+        // console.log(/abc/ig.flags);  //gi
+        // console.log(/abc/ig.source);  //abc
+
+        // console.log(/foo.bar/.test('foo\nbar')); //false
+        // console.log(/foo[^]bar/.test('foo\nbar')); //true
+
+        // console.log(/foo.bar/s.test('foo\nbar'));  //true
+
+        //const re = /foo.bar/s;
+        // //另一种写法
+        // // const re = new RegExp('foo.bar',s);
+        // console.log(re.test('foo\nbar'));
+        // console.log(re.dotAll); // true
+        // console.log(re.flags); //s
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            margin: 0 auto;
+            width: 500px;
+        }
+        #jumpTo{
+            color: red;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>恭喜您，支付成功</h2>
+        <span id="jumpTo">10</span>秒后自动返回首页
+        <p><button>立即返回</button></p>
+    </div>
+    <script>
+        //逻辑：当页面跳转到该页时(即加载页面时)，触发一个10秒定时器
+        window.onload = function() {
+            let timer = 10;
+            setInterval(() => {
+                //每过一秒数值减一
+                timer--;
+                //将减之后的数值传入上面
+                document.getElementById('jumpTo').innerText = timer;
+                //判断timer是否为0
+                if(timer==0){
+                    location.href = 'https://jinwen01.ke.qq.com';
+                }
+            },1000);
+        }
+        //拿到的button是个数组，所以先要取到
+        document.getElementsByTagName('button')[0].onclick = function() {
+            location.href = 'https://jinwen01.ke.qq.com';
+        }
+    </script>
+</body>
+</html>

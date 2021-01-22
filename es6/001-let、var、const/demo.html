@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1、块级作用域
+        /* function f1() {
+            let n = 5;
+            if(true) {
+                let n = 30;
+                console.log(n); //30
+            }
+            console.log(n); //5
+        }
+        f1(); */
+        /* function f1() {
+            var n = 5;
+            if(true) {
+                n = 30;
+                console.log(n);  //30
+            }
+            console.log(n);  //30
+        }
+        f1(); */
+
+        // 允许块级作用域任意嵌套 上一级可定义下一级同名变量
+        /* {{{{
+            {let isname = 'lisa'}
+            let isname = 'rose';
+            console.log(isname); //rose
+        }}}} */
+
+        // 匿名立即执行函数表达式(IIFE)
+        //IIFE写法
+        /* (function() {
+            var tmp = 'hello';
+            hello
+        }());
+
+        //块级作用域写法
+        { 
+            let tmp = 'lisa';
+            lisa
+        } */
+
+        //2、块级作用域与函数声明
+        /* //情况一
+        if(true) {
+            function f1() {}
+        }
+        //情况二
+        try {
+            function f2() {
+            } catch(e) {
+                
+            }
+        } */
+        //es5环境
+        /* function f() {console.log('lisa');}
+        (function() {
+            if(true) {
+                function f() {console.log('lisa');}
+            }
+            f();
+        }());  //输出lisa
+        //上面代码实际运行过程  声明函数提前
+        function f() {console.log('lisa');}
+        (function() {
+            function f() {console.log('lisa');}
+            if(true) {
+            }
+            f();
+        }()) //输出lisa */
+        //es6浏览器环境 上面的代码均会报错
+        //通过块级作用域声明函数 函数声明相当于var
+        /* function f() {console.log('lisa');}
+        (function f(){
+            var f = undefined;
+            if(true) {
+                function f() {console.log('lisa');}
+            }
+            f();  //输出lisa
+        }()) */
+        //块级作用域内部的函数声明语句，建议不要使用
+        /* {
+            let a = 'lisa';
+            function f() {
+                return a;
+            }
+        }
+        //块级作用域内部 优先使用函数表达式
+        {
+            let a = 'lisa';
+            let f = function() {
+                return a;
+            }
+        } */
+        
+        //const
+        // const PI = 3.1415;
+        // console.log(PI);
+        // const PI = 3;  只能做常量声明
+        // console.log(PI);
+        /* if(true) {
+            const MAX = 5;
+        }
+        console.log(MAX); */ //报错
+
+        /* var message = 'lisa';
+        let age = 21;
+        //不能进行重复定义 所以以下两行都报错
+        const message = 'rose';
+        const age = 32;
+        console.log(message);
+        console.log(age); */
+
+        /* const f = [];
+        f.push('hello');
+        f.length = 0;
+        f = ['lisa'];  //const定义常量
+        console.log(f); //报错 */
+
+        //将对象冻结
+        /* const foo = Object.freeze({});
+        //常规模式下 下面一行不起作用，严格模式则报错
+        foo.prop = 123;
+        console.log(foo); */
+
+        //将对象彻底冻结 包含属性
+        /* var constantize = (obj) => {
+            Object.freeze(obj);
+            Object.keys(obj).forEach((key,i) => {
+                if(typeof obj[key] === 'object') {
+                    constantize(obj[key]);
+                }
+            })
+        } */
+
+        //es5中顶层对象的赋值与全局变量赋值是一样的
+        /* var a = 5;
+        console.log(a);
+        console.log(window.a); */
+        let a = 3;
+        console.log(window.a);  //undefined
+        var b = 4;
+        console.log(window.b);  //4
+
+    </script>
+</body>
+</html>
