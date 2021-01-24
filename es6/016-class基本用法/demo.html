@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // function Point(x,y) {
+        //     this.x = x;
+        //     this.y = y;
+        // }
+        // Point.prototype.toString = function() {
+        //     return '(' + this.x + ',' + this.y + ')';
+        // };
+        // var p = new Point(1,2);
+
+        //es6提供了新方法
+        // class Point {
+        //     constructor(x,y) {
+        //         this.x = x;
+        //         this.y = y;
+        //     }
+        //     toString() {
+        //         return '(' + this.x + ',' + this.y + ')';
+        //     }
+        // }
+        // class Point {
+        // }
+        // console.log(typeof Point);  //function
+        // console.log(Point === Point.prototype.constructor);  //true
+        
+        // class Bar {
+        //     doStuff() {
+        //         console.log('stuff');
+        //     }
+        // }
+        // const b = new Bar();
+        // b.doStuff() //stuff
+
+        // class Point {
+        //     constructor() {}
+        //     toString() {}
+        //     toValue() {}
+        // }
+        // //等同于 三个方法都是定义在原型上面
+        // Point.prototype = {
+        //     constructor() {},
+        //     toString() {},
+        //     toValue() {}     
+        // }
+        // class B {}
+        // const b = new B();
+        // b.constructor === B.prototype.constructor  // true
+
+        // class Point {
+        //     constructor(){}
+        // }
+        // Object.assign(Point.prototype,{
+        //     toString(){},
+        //     toValue(){}
+        // });
+        //Point.prototype.constructor === Point //true
+
+        // class Point {
+        //     constructor(x,y) {}
+        //     toString() {} // es6写法 不可枚举的
+        // }
+        // console.log(Object.keys(Point.prototype));  //[]
+        // Object.getOwnPropertyNames(Point.prototype)
+
+        var Point = function (x,y) {};
+        Point.prototype.toString = function() {}; // es5 toString()可枚举
+        console.log(Object.keys(Point.prototype));  //toString
+
+    </script>
+</body>
+</html>

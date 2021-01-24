@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // function log(x,y) {
+        //     y = y || 'world';
+        //     console.log(x,y);
+        // }
+        // log('hello');
+        // log('hello','china');
+        // log('hello','');  //hello world
+        //判断y是否设置默认值
+        // if(typeof y === 'undefined') {
+        //     y = 'world';
+        // }
+        //也可为其y事先设置默认值
+        // function log(x,y = 'world') {
+        //     console.log(x,y);
+        // }
+        // log('hello'); //hello world
+        // log('hello','china'); //hello china
+        // log('hello','');  //hello
+
+        // function Point(x=0,y=0) {
+        //     this.x = x;
+        //     this.y = y;
+        // }
+        // const p = new Point();
+        // console.log(p);  // {x:0,y:0}
+
+        // function foo(x=5) {  // x已经被定义
+        //     let x = 1;
+        //     const x = 2;
+        // }
+        // foo(); //error
+
+        // function foo(x,y,z) {
+        //     console.log('hello');
+        // }
+        // foo();
+        // function foo(x,x,z = 1) {  //使用参数不能同名
+        //     console.log('hell');
+        // }
+        // foo();
+        
+        // let x = 99;
+        // function foo(p = x+1) {
+        //     console.log(p);
+        // }
+        // foo();//100
+        // x = 100;
+        // foo();//101
+
+        // function foo({x,y = 5}) {
+        //     console.log(x,y);
+        // }
+        // foo({});//undefined 5
+        // foo({x:1}); //1 5
+        // foo({x:1,y:2}); //1 2
+        // foo(); // 全局对象找不到x
+
+        // function foo({x,y = 5} = {}) {
+        //     console.log(x,y);
+        // }
+        // foo(); //undefined 5
+
+        // function fetch(url,{body = '',method = 'GET',headers = {}}) {
+        //     console.log(method);
+        // }
+        // fetch('http://example.com',{}) //get
+        // fetch('http://example.com')  //报错
+
+        // function fetch(url,{body= "",method = 'GET',headers= {}} = {}) {
+        //     console.log(method);
+        // }
+        // fetch('http://example.com') //get
+
+        // //写法一
+        // function m1({x=0,y=0} = {}) {
+        //     console.log([x,y]);
+        // }
+        // //写法二
+        // function m2({x,y} = {x:0,y:0}) {
+        //     console.log([x,y]);
+        // }
+        // m1();
+        // m2();//0 0
+
+        // m1({x:2,y:3});
+        // m2({x:2,y:3}); //2 3
+
+        // m1({x:3});  //3 0
+        // m2({x:3});  // 3 undefined
+
+        // function f(x=1,y) {
+        //     console.log([x,y]);
+        // }
+        // f(); //1 undefined
+        // f(2); //2 undefined
+        // f(undefined,1); // 1 1
+
+        // function f(x,y = 5,z) {
+        //     console.log([x,y,z]);
+        // }
+        // f(); //undefined 5 undefined
+        // f(1); // 1 5 undefined
+        // f(1,2); // 1 2 undefined
+        // f(1,undefined,2); //1 5 2
+
+        // function foo(x = 5,y = 3) {
+        //     console.log(x,y);
+        // }
+        // foo(undefined,null) //5 null
+
+        // console.log((function (a) {}).length);  //1
+        // console.log((function (a=5) {}).length);  //0
+        // console.log((function (a,b,c = 5) {}).length);  //2
+        // console.log((function (a,b = 2,c) {}).length);  //1
+        // console.log((function (a = 1,b,c) {}).length);  //0
+
+        // console.log(function(...args) {}.length);  //0
+
+        // var x = 1;
+        // function f(x,y = x) {
+        //     console.log(y);
+        // }
+        // f(2)//2
+
+        // var x = 1;
+        // function f(y = x) {
+        //     let x = 2; //只在当前代码块起作用 即大括号内
+        //     console.log(y);
+        // }
+        // f() //1
+
+        // function f(y = x) {
+        //     let x = 2;
+        //     console.log(y);
+        // }
+        // f(); //x 未定义 报错
+
+        // var x = 1;
+        // function foo(x = x) {  // let x = x 暂时性死区
+        //     console.log('hel');
+        // }
+        // foo(); //报错
+
+        // let foo = 'outer';
+        // function bar(func = () => foo) {  //匿名函数指向外层 
+        //     let foo = 'inner';
+        //     console.log(func());
+        // }
+        // bar(); //outer
+        // //改为下面这样就会报错
+        // function bar(func = () => foo) {
+        //     let foo = 'inner';
+        //     console.log(func());
+        // }
+        // bar();//foo未定义
+
+        // var x= 1;
+        // function foo(x,y = () => x=2) {
+        //     var x = 3;
+        //     y();
+        //     console.log(x);
+        // }
+        // foo(); //3
+        // console.log(x); //1
+
+        // var x= 1;
+        // function foo(x,y = () => x=2) {
+        //     x = 3;
+        //     y();
+        //     console.log(x);
+        // }
+        // foo(); //2
+        // console.log(x); //1
+
+        // function throwIfMissing() {
+        //     throw new Error('Missing parameter');
+        // }
+        // function foo(mustBeProvided = throwIfMissing()) {  //throw在定义时函数已经执行
+        //     return mustBeProvided;
+        // }
+        // foo()
+
+        //rest参数
+        // function add(...values) {
+        //     let sum = 0;
+        //     for(var val of values) {
+        //         sum += val;
+        //     }
+        //     return sum;
+        // }
+        // add(1,2,3); //6
+
+        //rest使用push()
+        // function push(array,...item) {
+        //     items.forEach(function(item) {
+        //         array.push(item);
+        //         console.log(item);
+        //     });
+        // }
+        // var a = [];
+        // push(a,1,2,3)
+
+        // console.log((function(a) {}).length);//1
+        // console.log((function(a,b,...c) {}).length);//2
+        // console.log((function(...a) {}).length);//0
+
+        //严格模式
+        // const doSomething = function ({a,b}) {
+        //     'use strict';
+        // }
+        // const doSomething = function({a,b=a}) {
+        //     'use strict';
+        // }
+        // const doSomething = (...a) => {
+        //     'use strict'
+        // }
+        // const obj = {
+        //     doSomething({a,b}) {
+        //         'use strict'
+        //     }
+        // }
+        //以上均会报错
+        //两种解决方法
+        // 'use strict'  //设置全局严格模式
+        // function doSomething(a,b = a) {
+
+        // }
+        // //将函数包裹在一个无参数的立即执行函数中
+        // const doSomething = (function() {
+        //     'use strict';
+        //     return function(value = 42) {
+        //         return value;
+        //     };
+        // }());
+        // function foo() {}
+        // console.log(foo.name); //foo
+
+        // var f = function () {};
+        // //es6浏览器 f es5浏览器 ''
+        // console.log(f.name); //f
+
+        //箭头函数
+        // var f= v => v;
+        // //等同于
+        // var f = function (v) {
+        //     return v;
+        // };
+        // var f = () => 5;
+        // //等同于
+        // var f = function() {
+        //     return 5
+        // };
+        // var sum = (num1,num2) => num1 + num2;
+        // //等同于
+        // var sum = function(num1,num2) {
+        //     return num1 + num2
+        // };
+        // var sum
+
+        //箭头函数简化回调函数
+        //正常函数写法
+        // [1,2,3].map(function (x) {
+        //     return x * x;
+        // })
+        // //箭头函数写法
+        // [1,2,3].map(x => x * x);
+
+        //this
+        // function foo() {
+        //     setTimeout(() => {
+        //         console.log('id:',this.id);
+        //     }, 100);
+        // }
+        // var id = 21;
+        // foo.call({id: 42});  //id:42
+        // function Timer() {
+        //     this.s1 = 0;
+        //     this.s2 = 0;
+        //     setInterval(() => this.s1++,1000);
+        //     setInterval(function() {
+        //         this.s2++;
+        //     },1000);
+        // }
+        // var timer = new Timer();
+
+        // setTimeout(() => console.log('s1:',timer.s1),3100); //3timer函数
+        // setTimeout(() => console.log('s2:',timer.s2),3100); //0全局
+
+        // var handler = {
+        //     id: '123456',
+        //     init: function() {
+        //         document.addEventListener('click',
+        //         event => this.doSomething(event.type),false);
+        //     },
+        //     doSomething: function(type) {
+        //         console.log('Handling' + type + 'for' + this.id);
+        //     }
+        // };
+        // //es6
+        // function foo() {
+        //     setTimeout(() => {
+        //         console.log('id: ',this.id);
+        //     },100);
+        // }
+        // //es5
+        // function foo() {
+        //     var _this = this;
+        //     setTimeout(function() {
+        //         console.log('id: ',this.id);
+        //     },100);
+        // }
+        //例题
+        // function foo() {
+        //     return () => {
+        //         return () => {
+        //             return () => {
+        //                 console.log('id: ',this.id);
+        //             };
+        //         };
+        //     };
+        // }
+        // var f = foo.call({id:1});
+        // var t1 = f.call({id:2})()(); //id: 1
+        // var t2 = f().call({id:3})(); //id: 1
+        // var t3 = f()().call({id:4}); //id: 1
+
+        function foo() {
+            setTimeout(() => {
+                console.log('args:',arguments);
+            },100);
+        }
+        foo(2,4,6,8) //args: [2,4,6,8]
+    </script>
+</body>
+</html>
