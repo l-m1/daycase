@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //    let s = Symbol();
+    //    console.log(typeof s );  //symbol
+        // let s1 = Symbol('foo');
+        // let s2 = Symbol('bar');
+
+        // console.log(s1);  //Symbol(foo)
+        // console.log(s2);  //Symbol(bar)
+
+        // console.log(s1.toString()); //'Symbol(foo)'
+        // console.log(s2.toString()); //'Symbol(bar)'
+
+        // const obj = {
+        //     toString() {
+        //         return 'abc';
+        //     }
+        // };
+        // const sym = Symbol(obj);
+        // console.log(sym);  //Symbol(abc)
+
+        // //没有参数的情况下
+        // let s1 = Symbol();
+        // let s2 = Symbol();
+        // console.log(s1 === s2);  //false
+        // //有参数的情况下
+        // let s1 = Symbol('foo');
+        // let s2 = Symbol('foo');
+        // console.log(s1 === s2);  //false
+        // let sym = Symbol('My School');
+        // console.log('your school is' + sym);  //报错
+        // console.log(`your school is ${sym}`);  //报错
+
+        // let sym = Symbol('My School');
+        // String(sym)  //将Symbol类型转换为字符串
+        // console.log(sym.toString()); //将Symbol类型转换为字符串
+
+        // let sym = Symbol();
+        // console.log(Boolean(sym));  //true
+        // console.log(!sym);  //false
+        // if(sym) {
+        //     console.log('helo');
+        // }
+
+        // console.log(Number(sym));  //报错 不可转为数值类型
+
+        // const sym = Symbol('foo');  //添加描述 foo
+        // //方法一 转成字符串 读取描述  
+        // String(sym);
+        // sym.toString(); 
+        //方法二  
+        // const sym = Symbol('foo');
+        // console.log(sym.description);  //'foo'
+
+        // let mySymbol = Symbol();
+        // //第一种写法  
+        // let a1 = {};
+        // a1[mySymbol] = 'hello';
+        // //第二种
+        // let a2 = {
+        //     [mySymbol] : 'hello'
+        // };
+        // //第三种
+        // let a3 = {};
+        // Object.defineProperty(a3,mySymbol,{value:'hello'});
+        // console.log(a3[mySymbol]);  //'hello'
+
+        // const mySymbol = Symbol();
+        // const a = {};
+        // a.mySymbol = 'hello'; //将mySymbol当成了字符串
+        // console.log(a[mySymbol]);  //undefined
+        // console.log(a['mySymbol']); //hello
+        
+        // let s = Symbol();
+        // let obj = {
+        //     [s]: function(arg) {}
+        // };
+        // obj[s](123);
+
+        //增强写法
+        // let obj = {
+        //     [s](arg) {} //省略括号和function
+        // };
+
+        // const log = {};
+        // log.levels = {
+        //     DEBUG: Symbol('debug'),
+        //     INFO: Symbol('info'),
+        //     WRAN: Symbol('warn')
+        // };
+        // console.log(log.levels.DEBUG,'debug message');  //Symbol(debug) 'debug message'
+        // console.log(log.levels.INFO,'info message');  //Symbol(info) 'info message'
+
+        // const COLOR_RED = Symbol();
+        // const COLOR_GREEN = Symbol();
+
+        // function getComplement(color) {
+        //     switch(color) {
+        //         case COLOR_RED:
+        //             return COLOR_GREEN;
+        //         case COLOR_GREEN:
+        //             return COLOR_RED;
+        //         default:
+        //             throw new Error('Undefined color');
+        //     }
+        // }
+
+        //实例
+        // function getArea(shape,options) {
+        //     let area = 0;
+        //     switch(shape) {
+        //         case 'Triangle'://魔幻字符串
+        //         area = .5 + options.width * options.height;
+        //         break;
+        //     }
+        //     return area;
+        // }
+        // getArea('Triangle',{width:100,height:100});  //Triangle使用多次 造成强耦合
+
+        // const shapeType = {
+        //     triangle: 'Triangle'  //设置一个属性保存，便于修改 //或者改为 triangle: Symbol()
+        // };
+        // function getArea(shape,options) {
+        //     let area = 0;
+        //     switch(shape) {
+        //         case shapeType.triangle:
+        //             area = .5 * options.width * options.height;
+        //             break;
+        //     }
+        //     return area;
+        // }
+        
+        // getArea(shapeType.triangle,{width:100,height:100});
+
+        // const obj = {};
+        // let a = Symbol('a');
+        // let b = Symbol('b');
+        // obj[a] = 'Hello';
+        // obj[b] = 'World';
+        // const objectSymbols = Object.getOwnPropertySymbols(obj);
+        // console.log(objectSymbols);  //[Symmbol(a),Symbol(b)]
+
+        // const obj = {};
+        // const foo = Symbol('foo');
+        // obj[foo] = 'bar';
+        // for(let i in obj) {
+        //     console.log(i);  //无输出内容
+        // }
+        // console.log(Object.getOwnPropertyNames(obj)); //[]
+        // console.log(Object.getOwnPropertySymbols(obj)); //[Symbol(foo)]
+
+        // let obj = {
+        //     [Symbol('my_key')]:1,
+        //     enum:2,
+        //     nonEnum:3
+        // };
+        // console.log(Reflect.ownKeys(obj));  //['enum','nonEnum',Symbol(my_key)]
+
+        // let size = Symbol('size');
+        // class Collection {
+        //     constructor() {
+        //         this[size] = 0;
+        //     }
+        //     add(item) {
+        //         this[this[size]] = item;
+        //         this[size]++;
+        //     }
+        //     static sizeof(instance) {
+        //         console.log(instance[size]);
+        //     }
+        // }
+        // let x = new Collection();
+        // Collection.sizeof(x);  //0
+
+        // x.add('foo');
+        // Collection.sizeof(x)  //1
+        // Object.keys(x)  //['0']
+        // Object.getOwnPropertyNames(x) // ['0']
+        // Object.getOwnPropertySymbols(x)  //[Symbol(size)]
+
+        // let s1 = Symbol.for('foo');
+        // let s2 = Symbol.for('foo');
+        // console.log(s1 === s2);  //true
+
+        // Symbol.for('foo') === Symbol.for('foo')  //true
+        // Symbol('foo') === Symbol('foo') //false
+
+        // let s1 = Symbol.for('foo');
+        // console.log(Symbol.keyFor(s1));  //foo
+        // let s2 = Symbol('foo');
+        // console.log(Symbol.keyFor(s2));  //undefined
+
+        // function foo() {
+        //     return Symbol.for('bar');
+        // }
+        // const x = foo();
+        // const y = Symbol.for('bar');
+        // console.log(x === y);   // true
+        
+        // iframe = document.createElement('iframe');
+        // iframe.src = String(window.location);
+        // document.body.appendChild(iframe);
+        // iframe.contentWindow.Symbol.for('foo') === Symbol.for('foo')  //true
+
+        // //mod.js
+        // const FOO_KEY = Symbol.for('foo');  //防止失真
+        // function A() {
+        //     this.foo = 'hello';
+        // }
+        // if(!global[FOO_KEY]) {
+        //     global[FOO_KEY] = new A();
+        // }
+        // module.exports = global[FOO_KEY];
+
+        // //Symbol.hasInstance
+        // class MyClass {
+        //     [Symbol.hasInstance](foo) {
+        //         return foo instanceof Array;
+        //     }
+        // }
+        // [1,2,3] instanceof new MyClass()  // true
+
+        // class Even {
+        //     static [Symbol.hasInstance](obj) {
+        //         return Number(obj) % 2 === 0;
+        //     }
+        // }
+        // //等同于
+        // const Even = {
+        //     [Symbol.hasInstance](obj) {
+        //         return Number(obj) % 2 === 0;
+        //     }
+        // };
+        // 1 instanceof Even //false
+        // 2 instanceof Even //true
+        // 12345 instanceof Even //false
+
+        // //Symbool.isConcatSpreadable将数组展开
+        // let arr1 = ['c','d'];
+        // console.log(['a','b'].concat(arr1,'e'));  //[a','b','c','d','e']
+        // console.log(arr1[Symbol.isConcatSpreadable]);  //undefined
+
+        // let arr2 = ['c','d'];
+        // arr2[Symbol.isConcatSpreadable] = false;
+        // console.log(['a','b'].concat(arr2,'e'));  //['a','b',['c','d'],'e']
+
+        // let arr2 = ['c','d'];
+        // arr2[Symbol.isConcatSpreadable] = true; //展开行为为true时
+        // console.log(['a','b'].concat(arr2,'e'));  //['a','b','c','d','e']
+
+        // class A1 extends Array {
+        //     constructor(args) {
+        //         super(args);
+        //         this[Symbol.isConcatSpreadable] = true;  //定义在实例上
+        //     }
+        // }
+        // class A2 extends Array {
+        //     constructor(args) {
+        //         super(args);
+        //     }
+        //     get [Symbol.isConcatSpreadable]() { //定义在类本身
+        //         return false
+        //     }
+        // }
+        // let a1 = new A1();
+        // a1[0] = 3;
+        // a1[1] = 4;
+        // let a2 = new A2();
+        // a2[0] = 5;
+        // a2[1] = 6;
+        // [1,2].concat(a1).concat(a2)  //[1,2,3,4,[5,6]]
+
+        // //Symbol.species 创建衍生对象时调用的是原本类的实例方法
+        // class MyArray extends Array {}
+        // const a = new MyArray(1,2,3);
+        // const b = a.map(x => x);
+        // const c = a.filter(x => x > 1);
+        // //b,c 是a的衍生对象 是MyArray实例
+        // b instanceof MyArray //true  
+        // c instanceof MyArray //true
+
+        // class MyArray extends Array {
+        //     static get [Symbol.species]() {
+        //         return Array;
+        //     }
+        // }
+        // const a = new MyArray(1,2,3);
+        // const b = a.map(x => x);
+        // b instanceof MyArray //false 
+        // b instanceof Array //true 是Array实例
+        //例子
+        // class T1 extends Promise {}
+        // class T2 extends Promise {
+        //     static get [Symbol.species]() {
+        //         return Promise;
+        //     }
+        // }
+
+        // new T1(r => r()).then(v => v) instanceof T1 //true
+        // new T2(r => r()).then(v => v) instanceof T2 //false
+
+        // //Symbol.mmatch 
+        // String.prototype.match(regexp)
+        // //等同于
+        // regexp[Symbol.match](this)
+        // class MyMatcher {
+        //     [Symbol.match](string) {
+        //         return 'hello world'.indexOf(string);
+        //     }
+        // }
+        // 'e'.match(new MyMatcher()) //1
+
+        // //Symbol.replace
+        // String.prototype.replace(searchValue,replaceValue)
+        // //等同于
+        // searchValue[Symbol.replace](this,replaceValue)
+        // const x = {};
+        // x[Symbol.replace] = (...s) => console.log(s);
+        // 'hello'.replace(x,'world')  //['hello','world']
+
+        // String.prototype.search(regexp)
+        // //等同于
+        // regexp[Symbol.search](this)
+        // class MySearch {
+        //     constructor(value) {
+        //         this.value = value;
+        //     }
+        //     [Symbol.search](string) {
+        //         return string.indexof(this.value);
+        //     }
+        // }
+        // 'foobar'.search(new MySearch('foo')) // 0
+
+        // String.prototype.split(separator,limit)
+        // //等同于
+        // separator[Symbol.split](this,limit)
+        // class MySplitter {
+        //     constructor(value) {
+        //         this.value = value;
+        //     }
+        //     [Symbol.split](string) {
+        //         let index = string.indexof(this.value);
+        //         if(index === -1) {
+        //             return string;
+        //         }
+        //         return [
+        //             string.substr(0,index);
+        //             string.substr(index + this.value.length)
+        //         ];
+        //     }
+        // }
+        // 'foobar'.split(new MySplitter('foo')) //['','bar']
+        // 'foobar'.split(new MySplitter('bar')) // ['foo','']
+        // 'foobar'.split(new MySplitter('baz')) //['foobar']
+
+        // const myIterable = {};
+        // myIterable[Symbol.iterator] = function* () {
+        //     yield 1;
+        //     yield 2;
+        //     yield 3;
+        // };
+        // [...myIterable]  // [1,2,3]
+
+        // //字符串参数模式三种 
+        // let obj = {
+        //     [Symbol.toPrimitive](hint) {
+        //         switch(hint) {
+        //             case 'number':
+        //                 return 123;
+        //             case 'string':
+        //                 return 'str';
+        //             case 'default':  //可转数值/字符串
+        //                 return 'dafault';
+        //             default:
+        //                 throw new Error();
+        //         }
+        //     }
+        // };
+        // 2 * obj // 246
+        // 3 + obj //'3default'
+        // obj == 'default' //true
+        // String(obj) //'str'
+        
+    </script>
+</body>
+</html>

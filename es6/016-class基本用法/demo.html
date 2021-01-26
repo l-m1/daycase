@@ -70,10 +70,415 @@
         // console.log(Object.keys(Point.prototype));  //[]
         // Object.getOwnPropertyNames(Point.prototype)
 
-        var Point = function (x,y) {};
-        Point.prototype.toString = function() {}; // es5 toString()可枚举
-        console.log(Object.keys(Point.prototype));  //toString
+        // var Point = function (x,y) {};
+        // Point.prototype.toString = function() {}; // es5 toString()可枚举
+        // console.log(Object.keys(Point.prototype));  //toString
 
+        // class Foo {
+        //     constructor() {
+        //         return Object.create(null);
+        //     }
+        // }
+
+        // new Foo() instanceof Foo
+
+        //类的实例
+        // class Point{}
+        // var Point = Point(2,3)//报错，没有使用new
+        // var Point = new Point(2,3); //正确
+
+        // class Point {
+        //     constructor(x,y) {
+        //         this.x = x;
+        //         this.y = y;
+        //     }
+        //     toString() {
+        //         return '(' + this.x + ',' + this.y + ')';
+        //     }
+        // }
+        // var point = new Point(2,3);
+        // point.toString()  //(2,3)
+        // point.hasOwnProperty('x') //true
+        // point.hasOwnProperty('toString')  //false
+        // point.__proto__.hasOwnProperty('toString')  //true
+
+        // var p1 = new Point(2,3);
+        // var p2 = new Point(3,2);
+        // console.log(p1.__proto__ === p2.__proto__);  //true
+
+        // var p1 = new Point(2,3);
+        // var p2 = new Point(3,2);
+
+        // //给p1原型添加方法
+        // p1.__proto__.printName = function() {
+        //     console.log('0ops');
+        // };
+        // p1.printName()  //0ops
+        // p2.printName()  //0ops
+        // var p3 = new Point(4,2);
+        // p3.printName()  //0ops
+
+        //取值or存值
+    //    class CustomHTMLElement {
+    //        constructor(element) {
+    //            this.element = element;
+    //        }
+    //        get html() {
+    //            return this.element.innerHTML;
+    //        }
+    //        set html(value) {
+    //            this.element.innerHTML = value;
+    //        }
+    //    }
+
+    //    var descriptor = Object.getOwnPropertyDescriptor(
+    //        CustomHTMLElement.prototype,'html'
+    //    );
+    //    console.log('get' in descriptor);   //true
+    //    console.log('set' in descriptor);  //true
+
+    //类的属性名，可采用表达式
+    // let methodName = 'getArea';
+    // class Square {
+    //     constructor(length) {}
+    //     [methodName]() {}
+    // }  //Square类的方法名getArea,是从表达式得到的
+
+    // const MyClass = class Me {
+    //     getClassName() {
+    //         console.log(Me.name);
+    //     }
+    // }
+    // let inst = new MyClass();
+    // inst.getClassName();  //Me
+    //Me.name  //报错 未定义Me
+
+    // let person = new class {
+    //     constructor(name) {
+    //         this.name = name;
+    //     }
+    //     sayName() {
+    //         console.log(this.name);
+    //     }
+    // }('张三');  //立即执行的实例
+    // person.sayName();  //张三
+
+    // new Foo();  //不存在提升
+    // class Foo {
+    //     constructor() {
+    //         console.log('hello');
+    //     }
+    // }
+
+    // class Point{}
+    // console.log(Point.name);  //Point
+
+    //Generator
+    // class Foo {
+    //     constructor(...args) {
+    //         this.args = args;
+    //     }
+    //     *[Symbol.iterator]() {
+    //         for(let arg of this.args) {
+    //             yield arg;
+    //         }
+    //     }
+    // }
+    // for(let x of new Foo('hello','world')) {
+    //     console.log(x);//hello 换行 world
+    // }
+
+    // class Logger {
+    //     printName(name = 'there') {
+    //         this.print(`hello ${name}`);
+    //     }
+    //     print(text) {
+    //         console.log(text);
+    //     }
+    // }
+    // const logger = new Logger();
+    // const {printName} = logger;
+    // printName();//报错严格模式 this指向undefined
+    // class Logger { //解决方法一
+    //     constructor() {
+    //         this.printName = this.printName.bind(this);
+    //     }
+    // }
+    // class Obj { //解决方法二
+    //     constructor() {
+    //         this.getThis = () => this;
+    //     }
+    // }
+
+    // const myObj = new Obj();
+    // console.log(myObj.getThis() === myObj);  //true
+    // function selfish(target) { //方法三
+    //     const cache = new WeakMap();
+    //     const handler = {
+    //         get(target,key) {
+    //             const value = Reflect.get(target,key);
+    //             if(typeof value !== 'function') {
+    //                 return value;
+    //             }
+    //             if(!cache.has(value)) {
+    //                 cache.set(value,value.bind(target));
+    //             }
+    //             return cache.get(value);
+    //         }
+    //     };
+    //     const proxy = new Proxy(target,handler);
+    //     return proxy;
+    // }
+
+    // const logger = selfish(new logger())
+
+    // class Foo {
+    //     static classMethod() {
+    //         return 'hello';
+    //     }
+    // }
+    // Foo.classMethod()  //hello
+    // var foo = new Foo();
+    // foo.classMethod()  //报错 应该在Foo类上调用而不是实例上调用
+
+    // class Foo {
+    //     static bar() {
+    //         this.baz();
+    //     }
+    //     static baz() {
+    //         console.log('hello');
+    //     }
+    //     baz() {
+    //         console.log('world');
+    //     }
+    // }
+    // Foo.bar()  //hello
+
+    // class Foo {
+    //     static classMethod() {
+    //         console.log('hello');
+    //     }
+    // }
+    // class Bar extends Foo {}
+    // Bar.classMethod()  //hello
+
+    // class Foo {
+    //     static classMethod() {
+    //         console.log('hello');
+    //     }
+    // }
+    // class Bar extends Foo {
+    //     static classMethod() {
+    //         console.log(super.classMethod() + ',too');
+    //     }
+    // }
+    // Bar.classMethod()  //hello too
+
+    //实例属性新写法
+    // class IncreasingCounter {
+    //     constructor() {
+    //         this._count = 0;  //count定义在constructor里面
+    //     }
+    //     get value() {
+    //         console.log('Getting the current value!');
+    //         return this._count;
+    //     }
+    //     increment() {
+    //         this._count++;
+    //     }
+    // }
+
+    // class IncreasingCounter {
+    //     _count = 0;  //定义在类的最顶层
+    //     get value() {
+    //         console.log('Getting the current value!');
+    //         return _count;
+    //     }
+    //     increment() {
+    //         _count++;
+    //     }
+    // }
+    // class foo {  //新写法
+    //     bar = 'hello';
+    //     baz = 'world';
+    //     constructor() {}
+    // }
+
+    //静态属性
+    // class Foo {
+    // }
+    // Foo.prop = 1;
+    // console.log(Foo.prop);  //1
+
+    // class MyClass {
+    //     static myStaticProp = 42;  //实例属性前加static
+    //     constructor() {
+    //         console.log(MyClass.myStaticProp);
+    //     }
+    // }
+
+    // class Foo {
+    // }
+    // Foo.prop = 1; //老写法
+    // class Foo {
+    //     static prop = 1; //新写法
+    // }
+
+    //私有方法和私有属性
+    // class Widget {
+    //     foo(baz) {  //公有方法
+    //         this._bar(baz);
+    //     }
+    //     _bar(baz) {   //私有方法
+    //         return this.snaf = baz;
+    //     }
+    // }
+
+    // class Widget {
+    //     foo(baz) {
+    //         bar.call(this,baz);  //调用了bar 使它成为了私有办法
+    //     }
+    // }
+    // function bar(baz) { //将私有办法移出来
+    //     return this.snaf = baz;
+    // }
+    // const bar = Symbol('bar');
+    // const snaf = Symbol('snaf');
+    // export default class MyClass {
+    //     foo(baz) { //公有方法
+    //         this[bar](baz); 
+    //     }
+    //     [bar](baz) { //私有方法
+    //         return this[snaf] = baz;
+    //     }
+    // }
+    // const inst = new myClass();
+    // Reflect.ownKeys(myClass.prototype)  //Symbol属性名依旧可以拿到
+
+    // class IncreasingCounter {
+    //     #count = 0;
+    //     get value() {
+    //         console.log('Getting the current value!');
+    //         console.log(this.#count);
+    //     }
+    //     increment() {
+    //         this.#count++;
+    //     }
+    // }
+    // const counter = new IncreasingCounter();
+    // counter.#count  //报错 私有属性 外部不能调用
+
+    // class Point {
+    //     #x;
+    //     constructor(x = 0) {
+    //         this.#x = +x;
+    //     }
+    //     get x() {
+    //         return this.#x;
+    //     }
+    //     set x(value) {
+    //         this.#x = +value;
+    //     }
+    // }
+
+    // class Foo {
+    //     #a;
+    //     #b;
+    //     constructor(a,b) {
+    //         this.#a = a;
+    //         this.#b = b;
+    //     }
+    //     #sum() {  //私有sum方法
+    //         return this.#a + this.#b;
+    //     }
+    //     printSum() {
+    //         console.log(this.#sum());
+    //     }
+    // }
+
+    // class Foo {
+    //     #privateValue = 42;
+    //     static getPrivateValue(foo) {
+    //         return foo.#privateValue;  //static 使foo可引用私有属性
+    //     }
+    // }
+    // Foo.getPrivateValue(new Foo());  // 42 创建实例foo 
+
+    // class FakeMath {
+    //     static PI = 22 / 7;
+    //     static #totallyRandomNumber = 4;
+
+    //     static #computeRandomNumber() {
+    //         return FakeMath.#totallyRandomNumber;
+    //     }
+
+    //     static random() {
+    //         console.log('I heard you like random numbers...');
+    //         return FakeMath.#computeRandomNumber();
+    //     }
+    // }
+
+    // FakeMath.PI  // 22/7
+    // FakeMath.random() //I heard you like random numbers... 4
+
+    // FakeMath.#totallyRandomNumber  // 报错 私有属性
+    // FakeMath.#computeRandomNumber() // 报错 私有方法 都只能在内部调用
+
+    //构造函数通过new命令调用
+    // function Person(name) {
+    //     if(new.target !== undefined) {
+    //         this.name = name;
+    //     } else {
+    //         throw new Error('必须使用 new 命令生成实例');
+    //     }
+    // }
+
+    // //另一种说法
+    // function Person(name) {
+    //     if(new.target === Person) { //person.prototype.constructor
+    //         this.name = name;
+    //     } else {
+    //         throw new Error('必须使用new 命令生成实例');
+    //     }
+    // }
+    // var person = new Person('张三');  //正确
+    // //var notAPerson = Person.call('person','张三'); //报错
+
+    // class Rectangle {
+    //     constructor(length,width) {
+    //         console.log(new.target === Rectangle); //内部调用
+    //         this.length = length;
+    //         this.width = width;
+    //     }
+    // }
+    // var obj = new Rectangle(3,4);  //true
+
+    // class Rectangle {
+    //     constructor(length,width) {
+    //         console.log(new.target === Rectangle); //new.target返回的是Square != Rectangle
+    //     }
+    // }
+    // class Square extends Rectangle {
+    //     constructor(length,width) {
+    //         super(length,width);
+    //     }
+    // }
+    // var obj = new Square(3)  //false
+
+    class Share {
+        constructor() {
+            if(new.target === Share) {
+                throw new Error('本类不能实例化');
+            }
+        }
+    }
+    class Rectangle extends Share {
+        constructor(length,width) {
+            super();
+        }
+    }
+    var x = new Share();  
+    var y = new Rectangle(3,4);
     </script>
 </body>
 </html>
