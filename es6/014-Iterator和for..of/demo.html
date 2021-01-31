@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // //模拟next返回值
+    // var it = makeIterator(['a','b']);
+    // console.log(it.next());  //{value:"a",done:false}
+    // console.log(it.next());  //{value:"b",done:false}
+    // console.log(it.next());  //{value:undefined,done:true}
+    // function makeIterator(array) {  //遍历器生成函数
+    //   var nextIndex = 0;
+    //   return {
+    //     next: function() {
+    //       return nextIndex < array.length ? 
+    //         {value:array[nextIndex++],done:false} : 
+    //         {value:undefined,done:true};
+    //     }
+    //   };
+    // }
+
+    // //makeIterator简写
+    // function makeIterator(array) {
+    //   var nextIndex = 0;
+    //   return {
+    //     next: function() {
+    //       return nextIndex < array.length ? 
+    //       {value: array[nextIndex++]} : 
+    //       {done:true};
+    //     }
+    //   };
+    // }
+
+    // var it = idMaker();
+    // console.log(it.next().value); // 0
+    // console.log(it.next().value); // 1
+    // console.log(it.next().value); // 2
+    // function idMaker() {
+    //   var index = 0;
+    //   return {
+    //     next: function() {
+    //       return {value:index++,done:false}
+    //     }
+    //   }
+    // }
+
+    //使用TypeScript写法
+    // interface Iterable {
+    //   [Symbol.iterator]() : iterator,
+    // }
+    // interface iterator {
+    //   next(value ?: any) : IterationResult,
+    // }
+    // interface IterationResult {
+    //   value:any,
+    //   done:boolean,
+    // }
+
+    // const obj = {
+    //   [Symbol.iterator] : function() {
+    //     return {
+    //       next: function() {
+    //         return {
+    //           value: 1,
+    //           done: true
+    //         };
+    //       }
+    //     };
+    //   }
+    // };
+
+    // let arr = ['a','b','c'];
+    // let iter = arr[Symbol.iterator]();
+    // console.log(iter.next());  //{value:"a",done:false}
+    // console.log(iter.next());  //{value:"b",done:false}
+    // console.log(iter.next());  //{value:"c",done:false}
+    // console.log(iter.next());  //{value:undefined,done:true}
+
+    // class RangeIterator {
+    //   constructor(start,stop) {
+    //     this.value = start;
+    //     this.stop = stop;
+    //   }
+    //   [Symbol.iterator]() {
+    //     return this;
+    //   }
+    //   next() {
+    //     var value = this.value;
+    //     if(value < this.stop) {
+    //       this.value++;
+    //       return {done:false,value:value};
+    //     }
+    //     return {done:true,value:undefined};
+    //   }
+    // }
+    // function range(start,stop) {
+    //   return new RangeIterator(start,stop);
+    // }
+    // for(var value of range(0,3)) {
+    //   console.log(value); //0 1 2
+    // }
+
+    // //遍历器实现指针结构
+    // function Obj(value) {
+    //   this.value = value;
+    //   this.next = null;
+    // }
+    // Obj.prototype[Symbol.iterator] = function() {
+    //   var iterator = {next:next};
+    //   var current = this;
+    //   function next() {
+    //     if(current) {
+    //       var value = current.value;
+    //       current = current.next;
+    //       return {done:false,value:value};
+    //     }else {
+    //       return {done:true};
+    //     }
+    //   }
+    //   return iterator;
+    // }
+    // var one = new Obj(1);
+    // var two = new Obj(2);
+    // var three = new Obj(3);
+
+    // one.next = two;
+    // two.next = three;
+    // for(var i of one) {
+    //   console.log(i);  // 1 2 3
+    // }
+
+    //为对象添加Iterator接口
+    // let obj = {
+    //   data: ['hello','world'],
+    //   [Symbol.iterator]() {
+    //     const self = this;
+    //     let index = 0;
+    //     return {
+    //       next() {
+    //         if(index < self.data.length) {
+    //           return {
+    //             value: self.data[index++],
+    //             done:false
+    //           };
+    //         } else {
+    //           return {value:undefined,done:true};
+    //         }
+    //       }
+    //     };
+    //   }
+    // };
+
+    // const arr = ['red','green','blue'];
+    // for(let v of arr) {
+    //   console.log(v); // red green blue
+    // }
+    // const obj = {};
+    // obj[Symbol.iterator] = arr[Symbol.iterator].bind(arr);
+    
+    // for(let v of obj) {
+    //   console.log(v);  // red green blue
+    // }
+
+    // const arr = ['blue','green','red'];
+    // arr.forEach(function(element,index) {
+    //   console.log(element);  // blue green red
+    //   console.log(index); // 0 1 2
+    // });
+
+    // var arr = ['a','b','c','d'];
+    // for(let a in arr) {
+    //   console.log(a);  // 0 1 2 3
+    // }
+    // for(let b of arr) {
+    //   console.log(b);  // a b c d
+    // }
+
+    // let arr = [3,5,7];
+    // arr.foo = 'hello';
+    // for(let i in arr) {
+    //   console.log(i); // "0" "1" "2" "foo"
+    // }
+    // for(let j of arr) {
+    //   console.log(j);  //3 5 7
+    // }
+
+    //Set和Map
+    // var engines = new Set(['Gecko','trident','Webkit','Webkit']);
+    // for(var e of engines) {
+    //   console.log(e);  // Gecko trident Webkit
+    // }
+
+    // var es6 = new Map();
+    // es6.set('edition',6);
+    // es6.set('commit','tct');
+    // es6.set('stand','ECMA-262');
+    // for(var [name,value] of es6) {
+    //   console.log(name+ ":" + value); //edition:6 commit:tct stand:ECMA-262
+    // }
+
+    // let map = new Map().set('a',11).set('b',22);
+    // for(let pair of map) {
+    //   console.log(pair);  //["a",11] ["b",22]
+    // }
+    // for(let [key,value] of map) {
+    //   console.log(key + ":" + value); // a:11 b:22
+    // }
+
+    // let arr = ['a','b','c'];
+    // for(let a of arr.entries()) {
+    //   console.log(a); // [0:'a'] [1:'b'] [2:'c']
+    // }
+    // let arr = ['a','b','c'];
+    // for(let a of arr.keys()) {
+    //   console.log(a); // 0 1 2
+    // }
+    // let arr = ['a','b','c'];
+    // for(let a of arr.values()) {
+    //   console.log(a); //a b c
+    // }
+
+    //类似数组的对象
+    // let str = 'hello';
+    // for(let s of str) {
+    //   console.log(s); // h e l l o
+    // }
+    // let paras = document.querySelectorAll('p');
+    // for(let p of paras) {
+    //   p.classList.add('text');
+    // }
+    // //arguments对象
+    // function printArgs() {
+    //   for(let x of arguments) {
+    //     console.log(x);
+    //   }
+    // }
+    // printArgs('a','b'); //a b
+
+    // for(let x of 'a\uD83D\uDC0A') {
+    //   console.log(x);  //a 
+    // }
+
+    // let arrayLike = {length: 2,0:'a',1:'b'};
+    // // for(let x of arrayLike) { //报错
+    // //   console.log(x);
+    // // }
+    // for(let x of Array.from(arrayLike)) {
+    //   console.log(x); // a b
+    // }
+
+    // let es6 = {
+    //   edition: 6,
+    //   committee: 'TC39',
+    //   standard: 'ECMA-262'
+    // };
+    // for(let e in es6) {
+    //   console.log(e); // edition committee standard
+    // }
+    // for(let m of es6) {
+    //   console.log(m);  //报错
+    // }
+
+    //方法一
+    // for(var key of Object.keys(someObject)) {
+    //   console.log(key + ':' + someObject[key]);
+    // }
+    
+    // function* entries(obj) {
+    //   for(let key of Object.keys(obj)) {
+    //     yield [key,obj[key]];
+    //   }
+    // }
+    // for(let [key,value] of entries(obj)) {
+    //   console.log(key+ '->',value);
+    // }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+</body>
+</html>
